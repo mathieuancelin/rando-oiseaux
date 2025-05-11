@@ -108,12 +108,36 @@ function OiseauPage() {
 }
 
 function ScorePage() {
+  const [oiseaux, setOiseaux] = useState(null);
+  useEffect(() => {
+    loadOiseaux().then(data => {
+      setOiseaux(data);
+    });
+  }, []);
+
   const storage = getStorage();
   const score = Object.values(storage).filter(v => v.correct).length;
+  if (!oiseaux) {
+    return null;
+  }
   return (
     <div>
       <h2>Mon Score</h2>
       <p>Vous avez {score} points !</p>
+      <ul>
+        {oiseaux.map(value => {
+          const resp = storage[value.id];
+          if (!resp) {
+            return (
+              <li>emplacement {value.emplacement} - vous n'avez pas répondu</li>
+            )
+          }
+          const respOiseau = oiseaux.find(o => o.id === resp.answer);
+          return (
+            <li>emplacement {value.emplacement} - {value.nom} : {resp.correct ? '1' : '0'} point {resp.correct ? '' : `(vous avez répondu ${respOiseau.nom})`}</li>
+          )
+        })}
+      </ul>
     </div>
   );
 }
