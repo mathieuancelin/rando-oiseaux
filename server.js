@@ -11,15 +11,19 @@ const app = express();
 app.use(express.static(dir));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(dir, 'index.html'), (err) => {
+  const file = path.join(dir, 'index.html');
+  console.log(`serving ${file}`);
+  res.sendFile(file, (err) => {
     if (err) {
       res.status(404).send('Not found');
     }
   });
 });
 
-app.get('/new', (req, res) => {
-  res.sendFile(path.join(dir, 'index.html'), (err) => {
+app.get('/*', (req, res) => {
+  const file = path.join(dir, 'index.html');
+  console.log(`serving ${file}`);
+  res.sendFile(file, (err) => {
     if (err) {
       res.status(404).send('Not found');
     }
