@@ -152,9 +152,15 @@ function HomePage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <h2>Administration de la Rando des Oiseaux</h2>
-      <button onClick={() => localStorage.removeItem('score')}>reset</button>
+      <button onClick={() => localStorage.removeItem('score')}>remise à zéro du jeux (sur cet appareil)</button>
       <a href="https://sonotheque.mnhn.fr/" target="_blank">sonotheque oiseaux</a>
       <div className="qr-container">
+        <div className="qr-item">
+          <h3>Score</h3>
+          <QRCodeCanvas value={`${window.location.origin}/score`} size={256} />
+          <a style={{ marginTop: 10 }} href={`/score`} target="_blank">voir la page comme un randonneur</a>
+          <a style={{ marginTop: 10 }} href={`/qrcode/score`} target="_blank">imprimer le QR Code</a>
+        </div>
         {oiseaux.map(o => <OiseauQr oiseau={o} />)}
       </div>
     </div>
@@ -192,12 +198,22 @@ function QrPage() {
   )
 }
 
+function QrPageScore() {
+  return (
+    <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+      <h1 style={{ marginBottom: 40 }}>Votre score</h1>
+      <QRCodeCanvas value={`${window.location.origin}/score`} size={512} />
+    </div>
+  )
+}
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/_admin" element={<HomePage />} />
         <Route path="/oiseau/:uuid" element={<OiseauPage />} />
+        <Route path="/qrcode/score" element={<QrPageScore />} />
         <Route path="/qrcode/:uuid" element={<QrPage />} />
         <Route path="/score" element={<ScorePage />} />
       </Routes>
