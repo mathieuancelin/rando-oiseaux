@@ -29,5 +29,16 @@
     "chant": "audio/merle.mp3",
     "trivia": "Son chant flûté est souvent entendu dès l’aube au printemps.",
     "infosFile": "infos/merle.md"
+  },
+  ,
+  {
+    "id": "2beac23c-fe04-4bc7-8b7f-46ffa399c30d",
+    "emplacement": 4,
+    "nom": "Pie bavarde",
+    "imageMystere": "images/pie_mystere.png",
+    "imageNormale": "images/pie.png",
+    "chant": "audio/pie.mp3",
+    "trivia": "C'est l'un des rares oiseaux au monde capable de se reconnaître dans un miroir, un signe d’intelligence que peu d’espèces animales partagent avec les humains, les dauphins ou les éléphants.",
+    "infosFile": "infos/pie.md"
   }
 ]
