@@ -156,10 +156,10 @@ function HomePage() {
       <a href="https://sonotheque.mnhn.fr/" target="_blank">sonotheque oiseaux</a>
       <div className="qr-container">
         <div className="qr-item">
-          <h3>Score</h3>
+          <h3>Page de score</h3>
           <QRCodeCanvas value={`${window.location.origin}/score`} size={256} />
           <a style={{ marginTop: 10 }} href={`/score`} target="_blank">voir la page comme un randonneur</a>
-          <a style={{ marginTop: 10 }} href={`/qrcode/score`} target="_blank">imprimer le QR Code</a>
+          <a style={{ marginTop: 10 }} href={`/qrcode/score`} target="_blank">imprimer l'affiche du QR Code</a>
         </div>
         {oiseaux.map(o => <OiseauQr oiseau={o} />)}
       </div>
@@ -172,8 +172,8 @@ function OiseauQr({ oiseau }) {
     <div className="qr-item">
       <h3>{oiseau.nom} (emplacement {oiseau.emplacement})</h3>
       <QRCodeCanvas value={`${window.location.origin}/oiseau/${oiseau.id}`} size={256} />
-      <a style={{ marginTop: 10 }} href={`/oiseau/${oiseau.id}`} target="_blank">voir</a>
-      <a style={{ marginTop: 10 }} href={`/qrcode/${oiseau.id}`} target="_blank">imprimer</a>
+      <a style={{ marginTop: 10 }} href={`/oiseau/${oiseau.id}`} target="_blank">voir la page comme un randonneur</a>
+      <a style={{ marginTop: 10 }} href={`/qrcode/${oiseau.id}`} target="_blank">imprimer l'affiche du QR Code</a>
     </div>
   )
 }
