@@ -152,7 +152,7 @@ function HomePage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <h2>Administration de la Rando des Oiseaux</h2>
-      <button onClick={() => localStorage.removeItem('score')}>remise à zéro du jeux (sur cet appareil)</button>
+      <button style={{ maxWidth: 320 }} onClick={() => localStorage.removeItem('score')}>remise à zéro du jeux (sur cet appareil)</button>
       <a href="https://sonotheque.mnhn.fr/" target="_blank">sonotheque oiseaux</a>
       <div className="qr-container">
         <div className="qr-item">
