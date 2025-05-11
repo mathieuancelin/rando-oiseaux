@@ -1,0 +1,33 @@
+[
+  {
+    "id": "1ddf5cd6-f28f-4cb3-a59e-9bab81c7d556",
+    "emplacement": 1,
+    "nom": "Rouge-gorge familier",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "images/rougegorge.png",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Cet oiseau est connu pour défendre vigoureusement son territoire, même en hiver.",
+    "infosFile": "infos/rougegorge.md",
+    "choices": []
+  },
+  {
+    "id": "bf7dbf90-96a5-417f-9bf1-0e07dc59698a",
+    "emplacement": 2,
+    "nom": "Mésange bleue",
+    "imageMystere": "images/mesange_mystere.png",
+    "imageNormale": "images/mesange.png",
+    "chant": "audio/mesange.mp3",
+    "trivia": "On la reconnaît souvent grâce à son agilité à se suspendre aux branches pour picorer.",
+    "infosFile": "infos/mesange.md"
+  },
+  {
+    "id": "f95bfada-743e-4d26-914c-32c889328672",
+    "emplacement": 3,
+    "nom": "Merle noir",
+    "imageMystere": "images/merle_mystere.png",
+    "imageNormale": "images/merle.png",
+    "chant": "audio/merle.mp3",
+    "trivia": "Son chant flûté est souvent entendu dès l’aube au printemps.",
+    "infosFile": "infos/merle.md"
+  }
+]
