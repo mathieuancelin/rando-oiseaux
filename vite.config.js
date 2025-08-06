@@ -14,6 +14,14 @@ export default defineConfig({
           // proxy will be an instance of 'http-proxy'
         }
       },
+      '/admin/api': {
+        target: 'http://localhost:3022',
+        changeOrigin: true,
+        rewrite: (path) => path,//.replace(/^\/api/, ''),
+        configure: (proxy, options) => {
+          // proxy will be an instance of 'http-proxy'
+        }
+      },
     }
   }
 })

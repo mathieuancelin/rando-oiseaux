@@ -211,7 +211,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/_admin" element={<AdminPage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/oiseau/:uuid" element={<OiseauPage />} />
         <Route path="/qrcode/score" element={<QrPageScore />} />
         <Route path="/qrcode/:uuid" element={<QrPage />} />

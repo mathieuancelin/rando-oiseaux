@@ -1,33 +1,27 @@
 import express from 'express';
-import path from 'node:path';
+import { createClient } from 'redis';
+import staticRoutes from './static.js';
+import authMiddleware from './auth.js';
+import apiRoutes from './api.js';
+import adminRoutes from './admin.js';
 
-const dir = path.resolve('./dist');
 const port = process.env.PORT || 3022;
 
 const app = express();
+app.use('/admin', authMiddleware);
+app.use('/admin*rest', authMiddleware);
 
-app.use(express.static(dir));
+app.use('/admin/api', adminRoutes);
+app.use('/api', apiRoutes);
+app.use('/', staticRoutes);
 
-app.get('/', (req, res) => {
-  const file = path.join(dir, 'index.html');
-  console.log(`serving ${file}`);
-  res.sendFile(file, (err) => {
-    if (err) {
-      res.status(404).send('Not found');
-    }
-  });
+
+const redis = createClient({
+  url: process.env.REDIS_URL || 'redis://:iNsq9Zebs6yUJhwvDEw@bnlzmallvkrlichobfur-redis.services.clever-cloud.com:40414'
 });
-
-app.get('/*rest', (req, res) => {
-  const file = path.join(dir, 'index.html');
-  console.log(`serving ${file}`);
-  res.sendFile(file, (err) => {
-    if (err) {
-      res.status(404).send('Not found');
-    }
+redis.on('error', err => console.log('Redis Client Error', err));
+redis.connect().then(() => {
+  app.listen(port, () => {
+    console.log(`✅ Serving on http://0.0.0.0:${port}`);
   });
-});
-
-app.listen(port, () => {
-  console.log(`✅ Serving ${dir} on http://localhost:${port}`);
 });
