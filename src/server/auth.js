@@ -9,7 +9,6 @@ export default function adminMiddleware(req, res, next) {
   }
   const credentials = Buffer.from(auth.slice(6), 'base64').toString('utf-8');
   const [username, password] = credentials.split(':');
-
   if (username !== validUsername || password !== validPassword) {
     res.set('WWW-Authenticate', 'Basic realm="Admin Area"');
     return res.status(401).send('Invalid credentials');
