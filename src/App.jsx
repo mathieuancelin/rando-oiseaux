@@ -4,17 +4,22 @@ import { QRCodeCanvas } from 'qrcode.react';
 import ReactMarkdown from 'react-markdown';
 
 import './App.css';
+import Home from './pages/Home';
 
 // https://sonotheque.mnhn.fr/
 
 function loadOiseaux() {
-  return fetch('/data/oiseaux.json').then(res => res.json());
+  return fetch('/admin/api/oiseaux', {
+    credentials: 'include'
+  }).then(res => res.json());
 }
 
-function pickRandomItems(arr, excludeId, n) {
-  const filtered = arr.filter(item => item.id !== excludeId);
-  const shuffled = filtered.sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, n);
+function loadOiseau(id) {
+  return fetch(`/api/oiseaux/${id}`).then(res => res.json());
+} 
+
+function loadChoices(id) {
+  return fetch(`/api/oiseaux/${id}/choices`).then(res => res.json());
 }
 
 function getStorage() {
@@ -35,7 +40,6 @@ function shuffleArray(array) {
 
 function OiseauPage() {
   const { uuid } = useParams();
-  const [oiseaux, setOiseaux] = useState([]);
   const [oiseau, setOiseau] = useState(null);
   const [showTrivia, setShowTrivia] = useState(false);
   const [answered, setAnswered] = useState(null);
@@ -43,22 +47,22 @@ function OiseauPage() {
   const [choices, setChoices] = useState([]);
 
   useEffect(() => {
-    loadOiseaux().then(data => {
-      setOiseaux(data);
-      const o = data.find(item => item.id === uuid);
-      setOiseau(o);
-      const choices = [o, ...pickRandomItems(data, o.id, 2)];
-      setChoices(shuffleArray(choices));
-      fetchMarkdown(o.infosFile);
-      const score = getStorage();
-      const current = score[uuid];
-      if (current) {
-        if (current.correct) {
-          setAnswered('correct');
-        } else {
-          setAnswered('incorrect');
+    loadOiseau(uuid).then(data => {
+      setOiseau(data);
+      loadChoices(uuid).then(otherChoices => {
+        const choices = [data, ...otherChoices];
+        setChoices(shuffleArray(choices));
+        fetchMarkdown(data.infosFile);
+        const score = getStorage();
+        const current = score[uuid];
+        if (current) {
+          if (current.correct) {
+            setAnswered('correct');
+          } else {
+            setAnswered('incorrect');
+          }
         }
-      }
+      });
     });
   }, [uuid]);
 
@@ -110,9 +114,10 @@ function OiseauPage() {
 function ScorePage() {
   const [oiseaux, setOiseaux] = useState(null);
   useEffect(() => {
-    loadOiseaux().then(data => {
-      setOiseaux(data);
-    });
+    // TODO: rewrite with a public api
+    //loadOiseaux().then(data => {
+    //  setOiseaux(data);
+    //});
   }, []);
 
   const storage = getStorage();
@@ -182,9 +187,8 @@ function QrPage() {
   const { uuid } = useParams();
   const [oiseau, setOiseau] = useState(null);
   useEffect(() => {
-    loadOiseaux().then(data => {
-      const o = data.find(item => item.id === uuid);
-      setOiseau(o);
+    loadOiseau(uuid).then(data => {
+      setOiseau(data);
     });
   }, [uuid]);
   if (!oiseau) {
@@ -216,6 +220,7 @@ function App() {
         <Route path="/qrcode/score" element={<QrPageScore />} />
         <Route path="/qrcode/:uuid" element={<QrPage />} />
         <Route path="/score" element={<ScorePage />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
   );
