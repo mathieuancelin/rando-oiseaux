@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'node:path';
 
 const dir = path.resolve('./dist');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3022;
 
 const app = express();
 
