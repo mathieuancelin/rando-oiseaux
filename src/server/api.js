@@ -25,5 +25,13 @@ export default function(redis) {
     res.json(oiseau);
   });
 
+  router.post('/scores/:uid', async (req, res) => {
+    const uid = req.params.uid;
+    const score = req.body;
+    console.log(score);
+    await redis.set(`scores:${uid}`, JSON.stringify(score));
+    res.json({ success: true });
+  });
+
   return router;
 }

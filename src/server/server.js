@@ -14,6 +14,7 @@ redis.on('error', err => console.log('Redis Client Error', err));
 redis.connect().then(() => {
   
   const app = express();
+  app.use(express.json({ limit: '1mb' }));
 
   app.use('/admin', authMiddleware);
   app.use('/admin*rest', authMiddleware);
