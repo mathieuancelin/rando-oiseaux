@@ -103,7 +103,6 @@ export default function OiseauPage() {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Entrez les informations de votre équipe</h5>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
                   <form>
@@ -112,11 +111,11 @@ export default function OiseauPage() {
                       <input type="text" className="form-control" value={teamInfos.name} onChange={(e) => setTeamInfos({ ...teamInfos, name: e.target.value })} />
                     </div>
                     <div className="mb-3">
-                      <label className="form-label">Le nom du chef d'équipe</label>
+                      <label className="form-label">Le nom du chef d'équipe (nécessaire pour participer au concours)</label>
                       <input type="text" className="form-control" value={teamInfos.leaderName} onChange={(e) => setTeamInfos({ ...teamInfos, leaderName: e.target.value })} />
                     </div>
                     <div className="mb-3">
-                      <label className="form-label">L'email du chef d'équipe</label>
+                      <label className="form-label">L'email du chef d'équipe (nécessaire pour participer au concours)</label>
                       <input type="email" className="form-control" value={teamInfos.leaderEmail} onChange={(e) => setTeamInfos({ ...teamInfos, leaderEmail: e.target.value })} />
                     </div>
                   </form>
