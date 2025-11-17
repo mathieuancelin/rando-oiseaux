@@ -135,7 +135,7 @@ export default function AdminPage() {
       </table>
       {displayEditModel && (
         <div className="modal d-block fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style={{ background: 'rgba(0, 0, 0, 0.5)'}}>
-          <div className="modal-dialog">
+          <div className="modal-dialog modal-xl">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Entrez les informations de l'oiseau</h5>
@@ -158,14 +158,56 @@ export default function AdminPage() {
                   <div className="mb-3">
                     <label className="form-label">L'image mystère de l'oiseau (URL)</label>
                     <input type="text" className="form-control" value={editingOiseau.imageMystere} onChange={(e) => setEditingOiseau({ ...editingOiseau, imageMystere: e.target.value })} />
+                    <button type="button" className="btn btn-primary btn-sm" style={{ width: 200 }} onClick={() => {
+                      document.getElementById('file-imageMystere').click();
+                    }}><i className="bi bi-upload"></i> charger une image</button>
+                    <input type="file" id="file-imageMystere" className="form-control hide" style={{ display: 'none' }} onChange={(e) => {
+                      const file = e.target.files[0];
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      fetch('/admin/api/uploads', {
+                        method: 'POST',
+                        body: formData
+                      }).then(res => res.json()).then(data => {
+                        setEditingOiseau({ ...editingOiseau, imageMystere: data.url });
+                      });
+                    }}/>
                   </div>
                   <div className="mb-3">
                     <label className="form-label">L'image normale de l'oiseau (URL)</label>
                     <input type="text" className="form-control" value={editingOiseau.imageNormale} onChange={(e) => setEditingOiseau({ ...editingOiseau, imageNormale: e.target.value })} />
+                    <button type="button" className="btn btn-primary btn-sm" style={{ width: 200 }} onClick={() => {
+                      document.getElementById('file-imageNormale').click();
+                    }}><i className="bi bi-upload"></i> charger une image</button>
+                    <input type="file" id="file-imageNormale" className="form-control hide" style={{ display: 'none' }} onChange={(e) => {
+                      const file = e.target.files[0];
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      fetch('/admin/api/uploads', {
+                        method: 'POST',
+                        body: formData
+                      }).then(res => res.json()).then(data => {
+                        setEditingOiseau({ ...editingOiseau, imageNormale: data.url });
+                      });
+                    }}/>
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Le chant de l'oiseau (URL)</label>
                     <input type="text" className="form-control" value={editingOiseau.chant} onChange={(e) => setEditingOiseau({ ...editingOiseau, chant: e.target.value })} />
+                    <button type="button" className="btn btn-primary btn-sm" style={{ width: 200 }} onClick={() => {
+                      document.getElementById('file-chant').click();
+                    }}><i className="bi bi-upload"></i> charger une image</button>
+                    <input type="file" id="file-chant" className="form-control hide" style={{ display: 'none' }} onChange={(e) => {
+                      const file = e.target.files[0];
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      fetch('/admin/api/uploads', {
+                        method: 'POST',
+                        body: formData
+                      }).then(res => res.json()).then(data => {
+                        setEditingOiseau({ ...editingOiseau, chant: data.url });
+                      });
+                    }}/>
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Le trivia de l'oiseau</label>
@@ -173,11 +215,25 @@ export default function AdminPage() {
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Informations de l'oiseau</label>
-                    <textarea className="form-control" value={editingOiseau.infos} onChange={(e) => setEditingOiseau({ ...editingOiseau, infos: e.target.value })} />
+                    <textarea className="form-control" rows={10} value={editingOiseau.infos} onChange={(e) => setEditingOiseau({ ...editingOiseau, infos: e.target.value })} />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Fichier d'informations de l'oiseau</label>
                     <input type="text" className="form-control" value={editingOiseau.infosFile} onChange={(e) => setEditingOiseau({ ...editingOiseau, infosFile: e.target.value })} />
+                    <button type="button" className="btn btn-primary btn-sm" style={{ width: 200 }} onClick={() => {
+                      document.getElementById('file-infosFile').click();
+                    }}><i className="bi bi-upload"></i> charger une image</button>
+                    <input type="file" id="file-infosFile" className="form-control hide" style={{ display: 'none' }} onChange={(e) => {
+                      const file = e.target.files[0];
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      fetch('/admin/api/uploads', {
+                        method: 'POST',
+                        body: formData
+                      }).then(res => res.json()).then(data => {
+                        setEditingOiseau({ ...editingOiseau, infosFile: data.url });
+                      });
+                    }}/>
                   </div>
                 </form>
               </div>

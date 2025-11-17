@@ -4,13 +4,25 @@ import staticRoutes from './static.js';
 import authMiddleware from './auth.js';
 import apiRoutes from './api.js';
 import adminRoutes from './admin.js';
+import { S3Client } from "@aws-sdk/client-s3";
 
 const port = process.env.PORT || 3022;
+
+const s3Client = new S3Client({
+  endpoint: process.env.CELLAR_ADDON_HOST || 'https://cellar-c2.services.clever-cloud.com',
+  region: 'eu-west-2',
+  credentials: {
+    accessKeyId: process.env.CELLAR_ADDON_KEY_ID || 'JEI0SHI40A7Y5L2HUVE2',
+    secretAccessKey: process.env.CELLAR_ADDON_KEY_SECRET || 'xVjXES9xmzltv1BU9YPjPCoGWoGvBkZQZLk7rsAW'
+  }
+});
 
 const redis = createClient({
   url: process.env.REDIS_URL || 'redis://:iNsq9Zebs6yUJhwvDEw@bnlzmallvkrlichobfur-redis.services.clever-cloud.com:40414'
 });
+
 redis.on('error', err => console.log('Redis Client Error', err));
+
 redis.connect().then(() => {
   
   const app = express();
@@ -19,7 +31,7 @@ redis.connect().then(() => {
   app.use('/admin', authMiddleware);
   app.use('/admin*rest', authMiddleware);
 
-  app.use('/admin/api', adminRoutes(redis));
+  app.use('/admin/api', adminRoutes(redis, s3Client));
   app.use('/api', apiRoutes(redis));
   app.use('/', staticRoutes);
 

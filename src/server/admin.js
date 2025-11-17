@@ -1,8 +1,14 @@
 import express from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import multer from 'multer';
 
-export default function(redis) {
+const upload = multer({ dest: 'uploads/' })
+
+export default function(redis, s3Client) {
+
+  const bucketName = "larandodesoiseaux";
   
   const router = express.Router()
   const static_oiseaux = JSON.parse(fs.readFileSync(path.resolve('./dist/data/oiseaux.json'))).map(o => ({ ...o, static: true }));
@@ -54,6 +60,35 @@ export default function(redis) {
     res.json({
       oiseau: JSON.parse(oiseau)
     })
+  });
+
+  router.post('/uploads', upload.single('file'), async (req, res) => {
+    try {
+      const file = req.file;
+      if (!file) {
+        return res.status(400).json({ error: 'Fichier manquant' });
+      }
+      const originalName = file.name || 'upload';
+      const ext = path.extname(originalName);
+      const base = path.basename(originalName, ext).replace(/[^a-zA-Z0-9-_]/g, '-').slice(0, 80) || 'file';
+      const key = `${new Date().toISOString().slice(0,10)}/${base}-${Date.now()}${ext}`;
+      const contentType = file.mimetype || 'application/octet-stream';
+
+      await s3Client.send(new PutObjectCommand({
+        Bucket: bucketName,
+        Key: key,
+        Body: file.data || file.buffer,
+        ContentType: contentType,
+        ACL: 'public-read'
+      }));
+
+      const endpoint = process.env.CELLAR_ADDON_HOST || 'cellar-c2.services.clever-cloud.com';
+      const url = `https://${bucketName}.${endpoint}/${encodeURIComponent(key).replace(/%2F/g, '/')}`;
+
+      res.json({ url, key, bucket: bucketName })
+    } catch (e) {
+      res.status(500).json({ error: 'Erreur lors de l\'upload', details: e.message })
+    }
   });
 
   return router;
