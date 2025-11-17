@@ -18,11 +18,15 @@ export default function OiseauPage() {
 
   useEffect(() => {
     loadOiseau(uuid).then(data => {
-      setOiseau(data);
+      setOiseau(data.oiseau);
       loadChoices(uuid).then(otherChoices => {
-        const choices = [data, ...otherChoices];
+        const choices = [data.oiseau, ...otherChoices];
         setChoices(shuffleArray(choices));
-        fetchMarkdown(data.infosFile);
+        if (data.oiseau.infosFile) {
+          fetchMarkdown(data.oiseau.infosFile);
+        } else if (data.oiseau.infos) {
+          setMarkdownContent(data.oiseau.infos);
+        }
         const score = getStorage();
         if (!score?.team?.name) {
           setDisplayTeamModal(true);
