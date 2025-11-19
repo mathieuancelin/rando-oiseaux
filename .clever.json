@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "app_id": "app_32bcae48-f9dc-41ab-802f-2277e9ece8bd",
+      "org_id": "orga_2fbf38c7-56ac-4de2-9f44-95bbded8e510",
+      "deploy_url": "https://github.com/mathieuancelin/rando-oiseaux.git",
+      "git_ssh_url": "https://github.com/mathieuancelin/rando-oiseaux.git",
+      "name": "rando",
+      "alias": "rando"
+    }
+  ]
+}
