@@ -24,7 +24,6 @@ export default function ScorePage() {
   if (!oiseaux) {
     return null;
   }
-  oiseaux.sort((a, b) => a.emplacement.localeCompare(b.emplacement));
   return (
     <div>
       <h2>Mon Score</h2>
@@ -42,7 +41,7 @@ export default function ScorePage() {
           </tr>
         </thead>
         <tbody>
-          {oiseaux.map(value => {
+          {oiseaux.sort((a, b) => b.emplacement - a.emplacement).map(value => {
           const resp = storage[value.id];
           if (!resp) {
             return (
