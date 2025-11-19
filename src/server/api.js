@@ -37,6 +37,13 @@ export default function(redis) {
     })
   });
 
+  router.get('/oiseaux', async (req, res) => {
+    const oiseaux = await allOiseaux();
+    res.json({
+      oiseaux
+    })
+  });
+
   router.post('/scores/:uid', async (req, res) => {
     const uid = req.params.uid;
     const score = req.body;

@@ -4,6 +4,11 @@ export function loadOiseaux() {
   }).then(res => res.json());
 }
 
+export function loadPublicOiseaux() {
+  return fetch('/api/oiseaux').then(res => res.json());
+}
+
+
 export function loadOiseau(id) {
   return fetch(`/api/oiseaux/${id}`).then(res => res.json());
 } 

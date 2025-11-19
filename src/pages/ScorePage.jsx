@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Route, Routes, useParams, Link } from 'react-r
 import { QRCodeCanvas } from 'qrcode.react';
 import ReactMarkdown from 'react-markdown';
 import { v4 } from 'uuid';
-import { loadOiseaux, getStorage } from './utils';
+import { getStorage, loadPublicOiseaux } from './utils';
 
 export default function ScorePage() {
   
   const [oiseaux, setOiseaux] = useState(null);
 
   const update = () => {
-    loadOiseaux().then(data => {
+    loadPublicOiseaux().then(data => {
       setOiseaux(data.oiseaux);
     });
   };
