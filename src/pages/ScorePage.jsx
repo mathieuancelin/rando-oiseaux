@@ -6,11 +6,17 @@ import { v4 } from 'uuid';
 import { loadOiseaux, getStorage } from './utils';
 
 export default function ScorePage() {
+  
   const [oiseaux, setOiseaux] = useState(null);
-  useEffect(() => {
+
+  const update = () => {
     loadOiseaux().then(data => {
       setOiseaux(data.oiseaux);
     });
+  };
+
+  useEffect(() => {
+    update();
   }, []);
 
   const storage = getStorage();
@@ -21,6 +27,9 @@ export default function ScorePage() {
   return (
     <div>
       <h2>Mon Score</h2>
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <button type="button" className="btn btn-primary" style={{ width: 200, maxWidth: 200 }} onClick={() => update()}><i className="bi bi-arrow-clockwise" /> rafraîchir</button>
+      </div>
       <p>Vous avez {score} points !</p>
       <div style={{ padding: 20 }}>
       <table className="table table-striped table-hover table-bordered">
