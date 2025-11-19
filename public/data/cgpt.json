@@ -1,0 +1,102 @@
+[
+  {
+    "id": "1c9e9b4f-9f1a-4e5d-a4f9-5cd8c613dd20",
+    "emplacement": 5,
+    "nom": "Barge à queue noire",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://upload.wikimedia.org/wikipedia/commons/4/40/Black-tailed_Godwit_Uferschnepfe.jpg",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Elle peut parcourir des milliers de kilomètres sans s’arrêter lors de ses migrations.",
+    "infos": "### 🐦 **Barge à queue noire**\nOiseau limicole élancé, très présent dans les prairies inondées du marais. Son long bec lui permet de sonder la vase à la recherche d’invertébrés."
+  },
+  {
+    "id": "7e6f8392-5660-43ba-a44e-dc5b066713dc",
+    "emplacement": 6,
+    "nom": "Vanneau huppé",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://pnr.parc-marais-poitevin.fr/wp-content/uploads/2015/12/vanneau-huppe-andreas-trepte-wikimedia-common-compressor.jpg",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Son vol acrobatique et sa huppe lui donnent une allure unique.",
+    "infos": "### 🐦 **Vanneau huppé**\nReconnaissable à sa huppe et à son cri plaintif, c'est un oiseau emblématique des prairies humides du marais."
+  },
+  {
+    "id": "e3a5c298-6a75-4e59-9547-2ffe826b22fa",
+    "emplacement": 7,
+    "nom": "Chevalier gambette",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://i0.wp.com/jessica-joachim.com/wp-content/uploads/2012/12/chevalier-gambette-96.jpg?ssl=1&w=1200",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Ses pattes rouge vif sont visibles à plus de 100 mètres.",
+    "infos": "### 🐦 **Chevalier gambette**\nPetit échassier très vocal, souvent observé dans les prairies inondées et les vasières du marais."
+  },
+  {
+    "id": "ad41b17f-b26c-43d6-9ebd-1c2a0c24f53c",
+    "emplacement": 8,
+    "nom": "Échasse blanche",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://pnr.parc-marais-poitevin.fr/wp-content/uploads/2015/12/300px-marais-poitevin-faune-echasse.jpg",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Elle possède les plus longues pattes (en proportion) de tous les échassiers européens.",
+    "infos": "### 🐦 **Échasse blanche**\nGracieuse avec ses longues pattes roses, elle affectionne les zones d’eau peu profonde du marais."
+  },
+  {
+    "id": "ea4d7008-7ab8-4411-84fa-790c4ddc9829",
+    "emplacement": 9,
+    "nom": "Avocette élégante",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Pied_Avocet_Recurvirostra_avosetta.jpg",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Son bec incurvé vers le haut est unique en Europe.",
+    "infos": "### 🐦 **Avocette élégante**\nOiseau noir et blanc très contrasté qui filtre l’eau en balayant son bec incurvé dans les vasières."
+  },
+  {
+    "id": "48e1f934-2503-49fd-a9fd-df9c7cc6be9c",
+    "emplacement": 10,
+    "nom": "Héron pourpré",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://pnr.parc-marais-poitevin.fr/wp-content/uploads/2015/12/heron-pourpre-Pierre-Dalous-wikimedia-commons-300x300-e1460474280205.jpg",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Il est plus discret et plus élancé que le héron cendré.",
+    "infos": "### 🐦 **Héron pourpré**\nSpécialiste des roselières, il se faufile avec une grande discrétion dans les zones denses du marais."
+  },
+  {
+    "id": "19f60cf5-57f7-4fa6-b2f1-01c98318d702",
+    "emplacement": 11,
+    "nom": "Tadorne de Belon",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://upload.wikimedia.org/wikipedia/commons/4/46/Tadorna_tadorna_by_Ludovic_Hirlimann.jpg",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Un oiseau entre le canard et l’oie, très coloré et sociable.",
+    "infos": "### 🐦 **Tadorne de Belon**\nFréquent dans les zones saumâtres et les marais littoraux autour du Marais poitevin."
+  },
+  {
+    "id": "7e0dd8af-bd76-4fdf-94dd-e42cfefe4b75",
+    "emplacement": 12,
+    "nom": "Aigrette garzette",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://biodivatlas.parc-marais-poitevin.fr/espece/static/medias/2497_78107_Aigrette_garzette.jpg",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Elle a les doigts jaunes, un détail unique.",
+    "infos": "### 🐦 **Aigrette garzette**\nEntièrement blanche, très élégante, elle chasse poissons et amphibiens le long des canaux du marais."
+  },
+  {
+    "id": "f396e3c7-e943-4d0f-86df-a809a5037f19",
+    "emplacement": 13,
+    "nom": "Guifette noire",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://biodiversite.parc-marais-poitevin.fr/wp-content/uploads/2021/01/guifette-noire-marais-poitevin-2020.jpg",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "Elle niche souvent sur des radeaux de végétation flottante.",
+    "infos": "### 🐦 **Guifette noire**\nPetite sterne sombre, très agile en vol, associée aux zones d’eau calme et végétalisée."
+  },
+  {
+    "id": "b2857e5a-0bdf-449a-90da-677fb9bb714e",
+    "emplacement": 14,
+    "nom": "Héron cendré",
+    "imageMystere": "images/rougegorge_mystere.png",
+    "imageNormale": "https://biodiversite.parc-marais-poitevin.fr/wp-content/uploads/2019/08/%C2%A9-Didier-cantin-heron.png",
+    "chant": "audio/rougegorge.mp3",
+    "trivia": "On le voit souvent immobile au bord d’un canal, à attendre sa proie.",
+    "infos": "### 🐦 **Héron cendré**\nTrès commun et facile à observer, il niche en grandes colonies appelées héronnières."
+  }
+]
