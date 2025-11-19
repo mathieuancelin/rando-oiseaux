@@ -12,7 +12,7 @@ export default function Home() {
               <span className="logo-icon">🦅</span>
               <span className="logo-text">La Rando des Oiseaux</span>
             </div>
-            <button className="cta-button primary">Commencer une rando</button>
+            <button className="cta-button primary hide">Commencer une rando</button>
           </div>
         </div>
       </header>
@@ -28,7 +28,7 @@ export default function Home() {
               Découvrez une nouvelle façon de randonner avec des jeux de piste sonores 
               qui vous feront reconnaître les oiseaux locaux à partir de leur chant.
             </p>
-            <div className="hero-actions">
+            <div className="hero-actions hide">
               <button className="cta-button primary large">Télécharger l'app</button>
               <button className="cta-button secondary large">En savoir plus</button>
             </div>
@@ -131,7 +131,7 @@ export default function Home() {
           <div className="cta-content">
             <h2>Prêt pour votre première rando ornithologique ?</h2>
             <p>Rejoignez des milliers d'amoureux de la nature qui ont déjà adopté La Rando des Oiseaux</p>
-            <div className="cta-actions">
+            <div className="cta-actions hide">
               <button className="cta-button primary large">Commencer maintenant</button>
               <button className="cta-button outline large">Voir une démo</button>
             </div>
