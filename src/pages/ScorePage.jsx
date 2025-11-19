@@ -24,6 +24,7 @@ export default function ScorePage() {
   if (!oiseaux) {
     return null;
   }
+  oiseaux.sort((a, b) => a.emplacement.localeCompare(b.emplacement));
   return (
     <div>
       <h2>Mon Score</h2>
