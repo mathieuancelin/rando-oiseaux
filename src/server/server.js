@@ -5,6 +5,7 @@ import authMiddleware from './auth.js';
 import apiRoutes from './api.js';
 import adminRoutes from './admin.js';
 import { S3Client } from "@aws-sdk/client-s3";
+import path from 'node:path';
 
 const port = process.env.PORT || 3022;
 
@@ -21,6 +22,11 @@ const redis = createClient({
   url: process.env.REDIS_URL || 'redis://:iNsq9Zebs6yUJhwvDEw@bnlzmallvkrlichobfur-redis.services.clever-cloud.com:40414'
 });
 
+function serveIndex(req, res) {
+  console.log('serveIndex', req.url);
+  res.sendFile(path.resolve('./dist/index.html'));
+}
+
 redis.on('error', err => console.log('Redis Client Error', err));
 
 redis.connect().then(() => {
@@ -30,9 +36,17 @@ redis.connect().then(() => {
 
   app.use('/admin', authMiddleware);
   app.use('/admin*rest', authMiddleware);
-
   app.use('/admin/api', adminRoutes(redis, s3Client));
   app.use('/api', apiRoutes(redis));
+
+  app.get('/admin/scores', serveIndex);
+  app.get('/admin', serveIndex);
+  app.get('/oiseau/:uuid', serveIndex);
+  app.get('/qrcode/score', serveIndex);
+  app.get('/qrcode/:uuid', serveIndex);
+  app.get('/score', serveIndex);
+  app.get('/scores', serveIndex);
+  app.get('/index.html', staticRoutes);
   app.use('/', staticRoutes);
 
   app.listen(port, () => {
