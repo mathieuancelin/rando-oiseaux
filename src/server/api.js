@@ -5,7 +5,7 @@ import path from 'node:path';
 export default function(redis) {
 
   const router = express.Router()
-  const static_oiseaux = JSON.parse(fs.readFileSync(path.resolve('./dist/data/oiseaux.json'))).map(o => ({ ...o, static: true }));
+  const static_oiseaux = []; //JSON.parse(fs.readFileSync(path.resolve('./dist/data/oiseaux.json'))).map(o => ({ ...o, static: true }));
 
   async function allOiseaux() {
     const keys = await redis.keys('oiseaux:*');

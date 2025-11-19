@@ -48,7 +48,7 @@ export default function ScorePage() {
               <tr>
                 <td>{value.emplacement}</td>
                 <td>Vous n'avez pas répondu</td>
-                <td>0</td>
+                <td>0 point</td>
               </tr>
             )
           }
@@ -56,8 +56,8 @@ export default function ScorePage() {
           return (
             <tr>
               <td>{value.emplacement}</td>
-              <td>{resp.correct ? '1' : '0'} point {resp.correct ? '' : `(vous avez répondu ${respOiseau.nom})`}</td>
-              <td>{resp.correct ? '1' : '0'}</td>
+              <td>{resp.correct ? 'oui' : 'non'}{resp.correct ? '' : `, vous avez répondu ${respOiseau.nom}`}</td>
+              <td>{resp.correct ? '1 point' : '0 point'}</td>
             </tr>
           )
         })}

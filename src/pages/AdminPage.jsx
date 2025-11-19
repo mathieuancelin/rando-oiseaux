@@ -242,6 +242,7 @@ export default function AdminPage() {
               </div>
               <div className="modal-footer">
                 <div className="btn-group">
+                  {false && editingOiseau.static && <button type="button" className="btn btn-danger" onClick={handleEditSubmit}>Inject</button>}
                   {!editingOiseau.static && <button type="button" className="btn btn-danger" onClick={handleDelete}>Supprimer</button>}
                   {!editingOiseau.static && <button type="button" className="btn btn-primary" onClick={handleEditSubmit}>Sauvegarder</button>}
                   {editingOiseau.static && <button type="button" className="btn btn-secondary" onClick={() => {

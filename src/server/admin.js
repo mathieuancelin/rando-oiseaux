@@ -11,7 +11,7 @@ export default function(redis, s3Client) {
   const bucketName = "larandodesoiseaux";
   
   const router = express.Router()
-  const static_oiseaux = JSON.parse(fs.readFileSync(path.resolve('./dist/data/oiseaux.json'))).map(o => ({ ...o, static: true }));
+  const static_oiseaux = []; // JSON.parse(fs.readFileSync(path.resolve('./dist/data/oiseaux.json'))).map(o => ({ ...o, static: true }));
 
   router.get('/oiseaux', async (req, res) => {
     const keys = await redis.keys('oiseaux:*');
@@ -42,6 +42,17 @@ export default function(redis, s3Client) {
 
   router.post('/oiseaux/:id', async (req, res) => {
     const id = req.params.id;
+    // if (req.body.static) {
+    //   delete req.body.static;
+    //   const infosFile = req.body.infosFile;
+    //   console.log(`http://127.0.0.1:3022/${infosFile}`);
+    //   const resp = await fetch(`http://127.0.0.1:3022/${infosFile}`, {
+    //     method: 'GET',
+    //   });
+    //   const text = await resp.text();
+    //   req.body.infos = text;
+    //   delete req.body.infosFile;
+    // }
     await redis.set(`oiseaux:${id}`, JSON.stringify(req.body));
     res.json({
       oiseau: req.body
