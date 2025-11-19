@@ -39,14 +39,14 @@ redis.connect().then(() => {
   app.use('/admin/api', adminRoutes(redis, s3Client));
   app.use('/api', apiRoutes(redis));
 
-  app.get('/admin/scores', serveIndex);
-  app.get('/admin', serveIndex);
-  app.get('/oiseau/:uuid', serveIndex);
-  app.get('/qrcode/score', serveIndex);
-  app.get('/qrcode/:uuid', serveIndex);
-  app.get('/score', serveIndex);
-  app.get('/scores', serveIndex);
-  app.get('/index.html', staticRoutes);
+  // app.get('/admin/scores', serveIndex);
+  // app.get('/admin', serveIndex);
+  // app.get('/oiseau/:uuid', serveIndex);
+  // app.get('/qrcode/score', serveIndex);
+  // app.get('/qrcode/:uuid', serveIndex);
+  // app.get('/score', serveIndex);
+  // app.get('/scores', serveIndex);
+  // app.get('/index.html', staticRoutes);
   app.use('/', staticRoutes);
 
   app.listen(port, () => {

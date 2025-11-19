@@ -322,6 +322,7 @@ function App() {
         <Route path="/oiseau/:uuid" element={<OiseauPage />} />
         <Route path="/qrcode/score" element={<ScoreQrPage />} />
         <Route path="/qrcode/:uuid" element={<OiseauQrPage />} />
+        <Route path="/scores" element={<ScorePage />} />
         <Route path="/score" element={<ScorePage />} />
         <Route path="/" element={<Home />} />
       </Routes>
