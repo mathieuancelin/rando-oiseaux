@@ -41,7 +41,7 @@ export default function ScorePage() {
           </tr>
         </thead>
         <tbody>
-          {oiseaux.sort((a, b) => b.emplacement - a.emplacement).map(value => {
+          {oiseaux.sort((a, b) => a.emplacement - b.emplacement).map(value => {
           const resp = storage[value.id];
           if (!resp) {
             return (
