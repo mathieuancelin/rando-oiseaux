@@ -40,6 +40,14 @@ export default function(redis, s3Client) {
     })
   });
 
+  router.delete('/scores', async (req, res) => {
+    const keys = await redis.keys('scores:*');
+    await Promise.all(keys.map(key => redis.del(key)));
+    res.json({
+      done: true
+    })
+  });
+
   router.post('/oiseaux/:id', async (req, res) => {
     const id = req.params.id;
     // if (req.body.static) {

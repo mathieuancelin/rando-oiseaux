@@ -16,9 +16,12 @@ export default function(redis) {
 
   async function pickRandomItems(excludeId, n) {
     const oiseaux = await allOiseaux();
-    const filtered = oiseaux.filter(item => item.id !== excludeId);
-    const shuffled = filtered.sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, n);
+    const oiseau = oiseaux.find(o => o.id === excludeId);
+    const choices = oiseau?.choices?.replace(/\n/g, '').replace(/\n\t/g, '').split(',').map(c => c.trim()).map(c => ({ nom: c })) || [];
+    return choices;
+    //const filtered = oiseaux.filter(item => item.id !== excludeId);
+    //const shuffled = filtered.sort(() => Math.random() - 0.5);
+    //return shuffled.slice(0, n);
   }
 
   router.get('/oiseaux/:id/choices', async (req, res) => {

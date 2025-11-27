@@ -60,17 +60,40 @@ export default function AdminPage() {
     }
   }
 
+  const downloadPlayersCsv = () => {
+    fetch('/admin/api/scores', {
+      credentials: 'include',
+      method: 'GET'
+    }).then(res => res.json()).then(data => {
+      const csv = 'Nom de l\'équipe,Score,Nom du chef d\'équipe,Email du chef d\'équipe\n' + data.scores.map(score => {
+        const finalScore = Object.keys(score).filter(n => n !== 'team').map(n => score[n]).filter(n => n.correct).length;
+        return {
+          name: score.team.name || 'Nom de l\'équipe non renseigné',
+          score: finalScore,
+          leaderName: score.team.leaderName || 'Nom du chef d\'équipe non renseigné',
+          leaderEmail: score.team.leaderEmail || 'Email du chef d\'équipe non renseigné',
+        }
+      }).sort((a, b) => b.score - a.score).map(score => score.name + ',' + score.score + ',' + score.leaderName + ',' + score.leaderEmail).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'scores.xls';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 20 }}>
       <h2>Administration de la Rando des Oiseaux</h2>
-      <button className="btn btn-primary" style={{ maxWidth: 320 }} onClick={() => localStorage.removeItem('score')}>remise à zéro du jeux (sur cet appareil)</button>
       
       <h3>Liens utiles</h3>
       <table className="table table-striped table-hover table-bordered" style={{ marginTop: 20 }}>
         <thead>
           <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Lien</th>
+            <th scope="col" style={{ width: '70%' }}>Nom</th>
+            <th scope="col" style={{ width: '30%' }}>Lien</th>
           </tr>
         </thead>
         <tbody>
@@ -81,6 +104,29 @@ export default function AdminPage() {
           <tr>
             <td>Sonotheque des oiseaux</td>
             <td><a href="https://sonotheque.mnhn.fr/" target="_blank">Voir</a></td>
+          </tr>
+          <tr>
+            <td>Liste des joueurs</td>
+            <td>
+              <button type="button" className="btn btn-sm btn-primary" onClick={downloadPlayersCsv}><i className="bi bi-download" /> Télécharger fichier excel</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Remise à zéro du score local</td>
+            <td><button className="btn btn-sm btn-danger" onClick={() => {
+              if (!window.confirm('Voulez-vous vraiment remise à zéro du score local ?')) return;
+              localStorage.removeItem('score');
+            }}><i className="bi bi-trash" /> Remise à zéro du score local (sur ce téléphone/ordinateur)</button></td>
+          </tr>
+          <tr>
+            <td>Remise à zéro des scores</td>
+            <td><button className="btn btn-sm btn-danger" onClick={() => {
+              if (!window.confirm('Voulez-vous vraiment remise à zéro du tableau des scores ?')) return;
+              fetch('/admin/api/scores', {
+                credentials: 'include',
+                method: 'DELETE'
+              });
+            }}><i className="bi bi-trash" /> Remise à zéro du tableau des scores</button></td>
           </tr>
         </tbody>
       </table>
@@ -159,6 +205,54 @@ export default function AdminPage() {
                     <input type="text" className="form-control" value={editingOiseau.nom} onChange={(e) => setEditingOiseau({ ...editingOiseau, nom: e.target.value })} />
                   </div>
                   <div className="mb-3">
+                    <label className="form-label">Le chant de l'oiseau (URL)</label>
+                    <input type="text" className="form-control" value={editingOiseau.chant} onChange={(e) => setEditingOiseau({ ...editingOiseau, chant: e.target.value })} />
+                    <button type="button" className="btn btn-primary btn-sm" style={{ width: 200 }} onClick={() => {
+                      document.getElementById('file-chant').click();
+                    }}><i className="bi bi-upload"></i> charger un MP3</button>
+                    <input type="file" id="file-chant" className="form-control hide" style={{ display: 'none' }} onChange={(e) => {
+                      const file = e.target.files[0];
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      fetch('/admin/api/uploads', {
+                        method: 'POST',
+                        body: formData
+                      }).then(res => res.json()).then(data => {
+                        setEditingOiseau({ ...editingOiseau, chant: data.url });
+                      });
+                    }}/>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Le trivia de l'oiseau</label>
+                    <textarea className="form-control" value={editingOiseau.trivia} onChange={(e) => setEditingOiseau({ ...editingOiseau, trivia: e.target.value })} />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Informations de l'oiseau</label>
+                    <textarea className="form-control" rows={3} value={editingOiseau.infos} onChange={(e) => setEditingOiseau({ ...editingOiseau, infos: e.target.value })} />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Choix possibles</label>
+                    <textarea className="form-control" rows={3} value={editingOiseau.choices} onChange={(e) => setEditingOiseau({ ...editingOiseau, choices: e.target.value })} />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Fichier d'informations de l'oiseau</label>
+                    <input type="text" className="form-control" value={editingOiseau.infosFile} onChange={(e) => setEditingOiseau({ ...editingOiseau, infosFile: e.target.value })} />
+                    <button type="button" className="btn btn-primary btn-sm" style={{ width: 200 }} onClick={() => {
+                      document.getElementById('file-infosFile').click();
+                    }}><i className="bi bi-upload"></i> charger une image</button>
+                    <input type="file" id="file-infosFile" className="form-control hide" style={{ display: 'none' }} onChange={(e) => {
+                      const file = e.target.files[0];
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      fetch('/admin/api/uploads', {
+                        method: 'POST',
+                        body: formData
+                      }).then(res => res.json()).then(data => {
+                        setEditingOiseau({ ...editingOiseau, infosFile: data.url });
+                      });
+                    }}/>
+                  </div>
+                  <div className="mb-3">
                     <label className="form-label">L'image mystère de l'oiseau (URL)</label>
                     <input type="text" className="form-control" value={editingOiseau.imageMystere} onChange={(e) => setEditingOiseau({ ...editingOiseau, imageMystere: e.target.value })} />
                     <button type="button" className="btn btn-primary btn-sm" style={{ width: 200 }} onClick={() => {
@@ -191,50 +285,6 @@ export default function AdminPage() {
                         body: formData
                       }).then(res => res.json()).then(data => {
                         setEditingOiseau({ ...editingOiseau, imageNormale: data.url });
-                      });
-                    }}/>
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Le chant de l'oiseau (URL)</label>
-                    <input type="text" className="form-control" value={editingOiseau.chant} onChange={(e) => setEditingOiseau({ ...editingOiseau, chant: e.target.value })} />
-                    <button type="button" className="btn btn-primary btn-sm" style={{ width: 200 }} onClick={() => {
-                      document.getElementById('file-chant').click();
-                    }}><i className="bi bi-upload"></i> charger une image</button>
-                    <input type="file" id="file-chant" className="form-control hide" style={{ display: 'none' }} onChange={(e) => {
-                      const file = e.target.files[0];
-                      const formData = new FormData();
-                      formData.append('file', file);
-                      fetch('/admin/api/uploads', {
-                        method: 'POST',
-                        body: formData
-                      }).then(res => res.json()).then(data => {
-                        setEditingOiseau({ ...editingOiseau, chant: data.url });
-                      });
-                    }}/>
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Le trivia de l'oiseau</label>
-                    <textarea className="form-control" value={editingOiseau.trivia} onChange={(e) => setEditingOiseau({ ...editingOiseau, trivia: e.target.value })} />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Informations de l'oiseau</label>
-                    <textarea className="form-control" rows={10} value={editingOiseau.infos} onChange={(e) => setEditingOiseau({ ...editingOiseau, infos: e.target.value })} />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Fichier d'informations de l'oiseau</label>
-                    <input type="text" className="form-control" value={editingOiseau.infosFile} onChange={(e) => setEditingOiseau({ ...editingOiseau, infosFile: e.target.value })} />
-                    <button type="button" className="btn btn-primary btn-sm" style={{ width: 200 }} onClick={() => {
-                      document.getElementById('file-infosFile').click();
-                    }}><i className="bi bi-upload"></i> charger une image</button>
-                    <input type="file" id="file-infosFile" className="form-control hide" style={{ display: 'none' }} onChange={(e) => {
-                      const file = e.target.files[0];
-                      const formData = new FormData();
-                      formData.append('file', file);
-                      fetch('/admin/api/uploads', {
-                        method: 'POST',
-                        body: formData
-                      }).then(res => res.json()).then(data => {
-                        setEditingOiseau({ ...editingOiseau, infosFile: data.url });
                       });
                     }}/>
                   </div>

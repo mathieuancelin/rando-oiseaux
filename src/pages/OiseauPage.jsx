@@ -79,17 +79,19 @@ export default function OiseauPage() {
 
   return (
     <div className="container">
-      {!answered && <img src={`/${oiseau.imageMystere}`} alt="Oiseau mystère" />}
-      {answered && <img src={`/${oiseau.imageNormale}`} alt={oiseau.nom} />}
+      {/* on cache l'image pour le moment */}
+      {false && !answered && <img src={`/${oiseau.imageMystere}`} alt="Oiseau mystère" />}
+      {/* on cache l'image pour le moment */}
+      {false && answered && <img src={`/${oiseau.imageNormale}`} alt={oiseau.nom} />}
       {!answered && <h2>Oiseau Mystère</h2>}
       {isCorrect && <h2>Bravo ! C'était {oiseau.nom}</h2>}
       {notCorrect && <h2>Perdu c'était {oiseau.nom}</h2>}
       <audio controls src={`/${oiseau.chant}`}></audio>
       {!answered ? (
         <div>
-          {showTrivia && <p>Indice : {oiseau.trivia}</p>}
+          {(true || showTrivia) && <p>Indice : {oiseau.trivia}</p>}
           {choices.map(o => <button onClick={() => handleAnswer(o)}>{o.nom}</button>)}
-          <button onClick={() => setShowTrivia(true)} className="secondary">Plus d'indice</button>
+          {false && <button onClick={() => setShowTrivia(true)} className="secondary">Plus d'indice</button>}
         </div>
       ) : (
         <div>

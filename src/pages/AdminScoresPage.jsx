@@ -33,6 +33,7 @@ export default function AdminScoresPage() {
             <th scope="col">#</th>
             <th scope="col">Equipe</th>
             <th scope="col">Score</th>
+            <th scope="col">Participation au concours</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +45,7 @@ export default function AdminScoresPage() {
                   <th scope="row">{idx + 1}</th>
                   <td>{score?.team?.name}</td>
                   <td>{score.score} points</td>
+                  <td>{score.team?.leaderEmail ? <span className="badge text-bg-success">Oui</span> : <span className="badge text-bg-danger">Non</span>}</td>
                 </tr>
               )
             })}
