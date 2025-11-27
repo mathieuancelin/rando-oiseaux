@@ -15,6 +15,11 @@ export default function ScorePage() {
     });
   };
 
+  const raz = () => {
+    localStorage.removeItem('scores');
+    update();
+  };
+
   useEffect(() => {
     update();
   }, []);
@@ -29,6 +34,7 @@ export default function ScorePage() {
       <h2>Mon Score</h2>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <button type="button" className="btn btn-primary" style={{ width: 200, maxWidth: 200 }} onClick={() => update()}><i className="bi bi-arrow-clockwise" /> rafraîchir</button>
+        <button type="button" className="btn btn-danger" style={{ width: 300, maxWidth: 300 }} onClick={() => raz()}><i className="bi bi-trash" /> remise à zéro de mon score</button>
       </div>
       <p>Vous avez {score} points !</p>
       <div style={{ padding: 20 }}>
