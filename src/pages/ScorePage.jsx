@@ -16,6 +16,9 @@ export default function ScorePage() {
   };
 
   const raz = () => {
+    if (!window.confirm('Voulez-vous vraiment remettre à zéro votre score ?')) {
+      return;
+    }
     localStorage.removeItem('scores');
     update();
   };
