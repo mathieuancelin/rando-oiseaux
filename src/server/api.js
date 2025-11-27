@@ -2,14 +2,14 @@ import express from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
 
-export default function(redis) {
+export default function(getRedis) {
 
   const router = express.Router()
   const static_oiseaux = []; //JSON.parse(fs.readFileSync(path.resolve('./dist/data/oiseaux.json'))).map(o => ({ ...o, static: true }));
 
   async function allOiseaux() {
-    const keys = await redis.keys('oiseaux:*');
-    const oiseaux_redis = await Promise.all(keys.map(key => redis.get(key)));
+    const keys = await getRedis().keys('oiseaux:*');
+    const oiseaux_redis = await Promise.all(keys.map(key => getRedis().get(key)));
     const oiseaux = [...static_oiseaux, ...oiseaux_redis.map(o => JSON.parse(o))];
     return oiseaux;
   }
@@ -33,7 +33,7 @@ export default function(redis) {
   router.get('/oiseaux/:id', async (req, res) => {
     const id = req.params.id;
     const oiseau_statis = static_oiseaux.find(o => o.id === id);
-    const oiseau_redis = await redis.get(`oiseaux:${id}`);
+    const oiseau_redis = await getRedis().get(`oiseaux:${id}`);
     const oiseau = oiseau_statis || (oiseau_redis ? JSON.parse(oiseau_redis) : null);
     res.json({
       oiseau
@@ -50,7 +50,7 @@ export default function(redis) {
   router.post('/scores/:uid', async (req, res) => {
     const uid = req.params.uid;
     const score = req.body;
-    await redis.set(`scores:${uid}`, JSON.stringify(score));
+    await getRedis().set(`scores:${uid}`, JSON.stringify(score));
     res.json({ success: true });
   });
 

@@ -18,16 +18,36 @@ const s3Client = new S3Client({
   }
 });
 
-const redis = createClient({
-  url: process.env.REDIS_URL || 'redis://:iNsq9Zebs6yUJhwvDEw@bnlzmallvkrlichobfur-redis.services.clever-cloud.com:40414'
-});
+let redis = null;
+
+function connectRedis() {
+  redis = createClient({
+    url: process.env.REDIS_URL || 'redis://:iNsq9Zebs6yUJhwvDEw@bnlzmallvkrlichobfur-redis.services.clever-cloud.com:40414'
+  });
+  // on redis error like socket close, relaunch connection
+  redis.on('error', (e) => {
+    console.log('Redis Client Error', e);
+    try {
+      if (redis) redis.close();
+    } catch (ex) {
+      console.log('Redis Client close error', ex);
+    }
+    console.log('try to reconnect')
+    connectRedis();
+  });
+  return redis;
+}
 
 function serveIndex(req, res) {
   console.log('serveIndex', req.url);
   res.sendFile(path.resolve('./dist/index.html'));
 }
 
-redis.on('error', err => console.log('Redis Client Error', err));
+function getRedis() {
+  return redis;
+}
+
+connectRedis();
 
 redis.connect().then(() => {
   
@@ -36,8 +56,8 @@ redis.connect().then(() => {
 
   app.use('/admin', authMiddleware);
   app.use('/admin*rest', authMiddleware);
-  app.use('/admin/api', adminRoutes(redis, s3Client));
-  app.use('/api', apiRoutes(redis));
+  app.use('/admin/api', adminRoutes(getRedis, s3Client));
+  app.use('/api', apiRoutes(getRedis));
 
   // app.get('/admin/scores', serveIndex);
   // app.get('/admin', serveIndex);
