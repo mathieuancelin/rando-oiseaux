@@ -80,9 +80,9 @@ export default function OiseauPage() {
   return (
     <div className="container">
       {/* on cache l'image pour le moment */}
-      {false && !answered && <img src={`/${oiseau.imageMystere}`} alt="Oiseau mystère" />}
+      {!answered && <img src={`/${oiseau.imageNormale}`} alt="Oiseau mystère" style={{ filter: 'blur(20px)' }} />}
       {/* on cache l'image pour le moment */}
-      {false && answered && <img src={`/${oiseau.imageNormale}`} alt={oiseau.nom} />}
+      {answered && <img src={`/${oiseau.imageNormale}`} alt={oiseau.nom} />}
       {!answered && <h2>Oiseau Mystère</h2>}
       {isCorrect && <h2>Bravo ! C'était {oiseau.nom}</h2>}
       {notCorrect && <h2>Perdu c'était {oiseau.nom}</h2>}
