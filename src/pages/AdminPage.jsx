@@ -84,11 +84,26 @@ export default function AdminPage() {
     });
   }
 
+  const downloadOiseauxJson = () => {
+    fetch('/admin/api/oiseaux', {
+      credentials: 'include',
+      method: 'GET'
+    }).then(res => res.json()).then(data => {
+      const json = JSON.stringify(data.oiseaux, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'oiseaux.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 20 }}>
       <h2>Administration de la Rando des Oiseaux</h2>
       
-      <h3>Liens utiles</h3>
       <table className="table table-striped table-hover table-bordered" style={{ marginTop: 20 }}>
         <thead>
           <tr>
@@ -103,7 +118,7 @@ export default function AdminPage() {
           </tr>
           <tr>
             <td>Sonotheque des oiseaux</td>
-            <td><a href="https://sonotheque.mnhn.fr/" target="_blank">Voir</a></td>
+            <td><a href="https://www.chant-oiseaux.fr/" target="_blank">voir</a></td>
           </tr>
           <tr>
             <td>Liste des joueurs</td>
@@ -112,14 +127,20 @@ export default function AdminPage() {
             </td>
           </tr>
           <tr>
-            <td>Remise à zéro du score local</td>
+            <td>Liste des oiseaux</td>
+            <td>
+              <button type="button" className="btn btn-sm btn-primary" onClick={downloadOiseauxJson}><i className="bi bi-download" /> Télécharger fichier JSON</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Remise à zéro du score du joueur courant</td>
             <td><button className="btn btn-sm btn-danger" onClick={() => {
               if (!window.confirm('Voulez-vous vraiment remise à zéro du score local ?')) return;
               localStorage.removeItem('score');
             }}><i className="bi bi-trash" /> Remise à zéro du score local (sur ce téléphone/ordinateur)</button></td>
           </tr>
           <tr>
-            <td>Remise à zéro des scores</td>
+            <td>Remise à zéro des scores de tous les joueurs</td>
             <td><button className="btn btn-sm btn-danger" onClick={() => {
               if (!window.confirm('Voulez-vous vraiment remise à zéro du tableau des scores ?')) return;
               fetch('/admin/api/scores', {
@@ -127,6 +148,13 @@ export default function AdminPage() {
                 method: 'DELETE'
               });
             }}><i className="bi bi-trash" /> Remise à zéro du tableau des scores</button></td>
+          </tr>
+          <tr key="score">
+            <td>Page de score (pour le joueur)</td>
+            <td>
+              <a href="/score" target="_blank">voir</a>
+              <a href={`/qrcode/score`} target="_blank" style={{ marginLeft: 10 }}>imprimer</a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -149,13 +177,6 @@ export default function AdminPage() {
           </tr>
         </thead>
         <tbody>
-          <tr key="score">
-            <td></td>
-            <td>Page de score (pour les joueurs)</td>
-            <td><a href="/score" target="_blank">voir</a></td>
-            <td><a href={`/qrcode/score`} target="_blank">imprimer</a></td>
-            <td></td>
-          </tr>
           {oiseaux.map(o => (
             <tr key={o.id}>
               <td>{o.emplacement}</td>
