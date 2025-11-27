@@ -21,6 +21,7 @@ const s3Client = new S3Client({
 let redis = null;
 
 function connectRedis() {
+  console.log('connecting to redis');
   redis = createClient({
     url: process.env.REDIS_URL || 'redis://:iNsq9Zebs6yUJhwvDEw@bnlzmallvkrlichobfur-redis.services.clever-cloud.com:40414'
   });
