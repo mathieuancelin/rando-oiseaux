@@ -23,18 +23,49 @@ let redis = null;
 function connectRedis() {
   console.log('connecting to redis');
   redis = createClient({
-    url: process.env.REDIS_URL || 'redis://:iNsq9Zebs6yUJhwvDEw@bnlzmallvkrlichobfur-redis.services.clever-cloud.com:40414'
+    url: process.env.REDIS_URL || 'redis://:iNsq9Zebs6yUJhwvDEw@bnlzmallvkrlichobfur-redis.services.clever-cloud.com:40414',
+    socket: {
+      // délai max entre 2 tentatives de connexion
+      reconnectStrategy: (retries) => {
+        // retries = nombre de tentatives déjà effectuées
+        if (retries > 10) {
+          // abandonner après 10 tentatives
+          console.error('Redis: too many reconnection attempts, giving up.');
+          return new Error('Redis reconnection failed');
+        }
+        const delay = Math.min(retries * 500, 5000); // backoff linéaire max 5s
+        console.warn(`Redis: reconnecting in ${delay}ms (attempt #${retries})`);
+        return delay;
+      },
+      connectTimeout: 10000,     // 10s pour se connecter
+      keepAlive: 5000            // ping TCP réguliers
+    }
+  });
+  // Événements utiles pour logguer/debugger
+  redis.on('connect', () => {
+    console.log('Redis: connecting…');
+  });
+
+  redis.on('ready', () => {
+    console.log('Redis: connection ready ✅');
+  });
+
+  redis.on('end', () => {
+    console.warn('Redis: connection closed');
+  });
+  redis.on('reconnecting', () => {
+    console.warn('Redis: reconnecting…');
   });
   // on redis error like socket close, relaunch connection
   redis.on('error', (e) => {
     console.log('Redis Client Error', e);
-    try {
-      if (redis) redis.close();
-    } catch (ex) {
-      console.log('Redis Client close error', ex);
-    }
-    console.log('try to reconnect')
-    connectRedis();
+    // try {
+    //   if (redis) redis.close();
+    //   console.log('try to reconnect')
+    //   connectRedis();
+    // } catch (ex) {
+    //   console.log('Redis Client close error', ex);
+    // }
   });
   return redis;
 }
