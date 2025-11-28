@@ -153,7 +153,7 @@ export default function AdminPage() {
             <td>Page de score (pour le joueur)</td>
             <td>
               <a href="/score" target="_blank">voir</a>
-              <a href={`/qrcode/score`} target="_blank" style={{ marginLeft: 10 }}>imprimer</a>
+              <a href={`/qrcode/score`} target="_blank" style={{ marginLeft: 10 }}>imprimer QR Code</a>
             </td>
           </tr>
         </tbody>
@@ -182,7 +182,7 @@ export default function AdminPage() {
               <td>{o.emplacement}</td>
               <td>{o.nom}</td>
               <td><a href={`/oiseau/${o.id}`} target="_blank">voir</a></td>
-              <td><a href={`/qrcode/${o.id}`} target="_blank">imprimer</a></td>
+              <td><a href={`/qrcode/${o.id}`} target="_blank">imprimer QR Code</a></td>
               <td>
                 <div className="btn-group">
                   <button type="button" className="btn btn-sm btn-primary" onClick={() => {
