@@ -8,7 +8,7 @@ export default function OiseauQrPage() {
   const [oiseau, setOiseau] = useState(null);
   useEffect(() => {
     loadOiseau(uuid).then(data => {
-      setOiseau(data);
+      setOiseau(data.oiseau);
     });
   }, [uuid]);
   if (!oiseau) {
@@ -16,7 +16,7 @@ export default function OiseauQrPage() {
   }
   return (
     <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-      <h1 style={{ marginBottom: 40 }}>emplacement {oiseau.emplacement}</h1>
+      <h1 style={{ marginBottom: 40 }}>Oiseau Mystère n° {oiseau.emplacement}</h1>
       <QRCodeCanvas value={`${window.location.origin}/oiseau/${oiseau.id}`} size={512} />
     </div>
   )
