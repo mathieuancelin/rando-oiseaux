@@ -200,6 +200,15 @@ export default function AdminPage() {
           ))}
         </tbody>
       </table>
+      <div style={{ marginTop: 20, display: 'none', flexDirection: 'column', gap: 10, width: '100%' }}>
+        {oiseaux.map(o => (
+          <div key={o.id} style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' , marginBottom: 20}}>
+            <div>Oiseau mystère n° {o.emplacement}</div>
+            <div>lien vers la page: <a href={`https://larandodesoiseaux.cleverapps.io/oiseau/${o.id}`} target="_blank">{`https://larandodesoiseaux.cleverapps.io/oiseau/${o.id}`}</a></div>
+            <div>lien vers le QR Code: <a href={`https://larandodesoiseaux.cleverapps.io/qrcode/${o.id}`} target="_blank">{`https://larandodesoiseaux.cleverapps.io/qrcode/${o.id}`}</a></div>
+          </div>
+        ))}
+      </div>
       {displayEditModel && (
         <div className="modal d-block fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style={{ background: 'rgba(0, 0, 0, 0.5)'}}>
           <div className="modal-dialog modal-xl">
