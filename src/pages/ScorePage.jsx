@@ -19,7 +19,7 @@ export default function ScorePage() {
     if (!window.confirm('Voulez-vous vraiment remettre à zéro votre score ?')) {
       return;
     }
-    localStorage.removeItem('scores');
+    localStorage.removeItem('score');
     update();
   };
 
