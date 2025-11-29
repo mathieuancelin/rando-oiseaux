@@ -17,7 +17,17 @@ export default function(getRedis) {
   async function pickRandomItems(excludeId, n) {
     const oiseaux = await allOiseaux();
     const oiseau = oiseaux.find(o => o.id === excludeId);
-    const choices = oiseau?.choices?.replace(/\n/g, ',').replace(/\n\r/g, ',').split(',').map(c => c.trim()).filter(c => !!c).map(c => ({ nom: c })) || [];
+    const choices = oiseau?.choices?.replace(/\n/g, ',')
+      .replace(/\n\r/g, ',')
+      .split(',')
+      .map(c => c.trim())
+      .filter(c => !!c)
+      .map(c => {
+        if (c.trim() === '<winner>') {
+          return oiseau;
+        }
+        return { nom: c };
+      });
     return choices;
     //const filtered = oiseaux.filter(item => item.id !== excludeId);
     //const shuffled = filtered.sort(() => Math.random() - 0.5);

@@ -20,8 +20,9 @@ export default function OiseauPage() {
     loadOiseau(uuid).then(data => {
       setOiseau(data.oiseau);
       loadChoices(uuid).then(otherChoices => {
-        const choices = [data.oiseau, ...otherChoices];
-        setChoices(shuffleArray(choices));
+        const choices = otherChoices; //[data.oiseau, ...otherChoices];
+        //setChoices(shuffleArray(choices));
+        setChoices(choices);
         if (data.oiseau.infosFile) {
           fetchMarkdown(data.oiseau.infosFile);
         } else if (data.oiseau.infos) {
@@ -90,7 +91,7 @@ export default function OiseauPage() {
       {!answered ? (
         <div>
           {(true || showTrivia) && <p>Indice : {oiseau.trivia}</p>}
-          {choices.map(o => <button onClick={() => handleAnswer(o)}>{o.nom}</button>)}
+          {choices.map((o, idx) => <button onClick={() => handleAnswer(o)}>Réponse {idx + 1} - {o.nom}</button>)}
           {false && <button onClick={() => setShowTrivia(true)} className="secondary">Plus d'indice</button>}
         </div>
       ) : (
