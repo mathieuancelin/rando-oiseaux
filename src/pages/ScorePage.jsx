@@ -78,7 +78,7 @@ export default function ScorePage() {
             return (
               <tr>
                 <td>{value.emplacement}</td>
-                <td>{resp.correct ? 'oui' : 'non'}{resp.correct ? '' : `, vous avez répondu ${respOiseau.nom}`}</td>
+                <td>{resp.correct ? 'oui' : 'non'}</td>
                 <td>{resp.correct ? '1 point' : '0 point'}</td>
               </tr>
             )
@@ -89,6 +89,7 @@ export default function ScorePage() {
       </div>
     );
   } catch (e) {
+    console.log('error', e);
     return <div className="alert alert-danger">Erreur lors du calcul du score: {e.message}</div>;
   }
 }
