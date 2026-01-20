@@ -698,5 +698,9 @@
   {
     "event_datetime": 1768864537413,
     "value": 96.848
+  },
+  {
+    "event_datetime": 1768932747540,
+    "value": 30.21
   }
 ]
